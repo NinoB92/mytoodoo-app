@@ -37,7 +37,7 @@ import TaskActions from "./TaskActions.vue";
 const props = defineProps({
   task: Object,
 });
-const emit = defineEmits(["updated"]);
+const emit = defineEmits(['updated']);
 const isEdit = ref(false);
 const completedClass = computed(() =>
   props.task.is_completed ? "completed" : ""
@@ -48,8 +48,13 @@ const vFocus = {
 };
 
 const updateTask = (event) => {
+ 
   const updatedTask = { ...props.task, name: event.target.value };
+  
   isEdit.value = false;
-  emit("updated", updatedTask);
+  
+  emit('updated', updatedTask);
+
 };
+
 </script>
