@@ -3,9 +3,10 @@
     <div class="d-flex justify-content-start align-items-center">
       <input
         class="form-check-input mt-0"
-        :class="completedClass"
         type="checkbox"
+        :class="completedClass"
         :checked="task.is_completed"
+        @change="markTaskAsCompleted"
       />
       <div
         class="ms-2 flex-grow-1"
@@ -27,7 +28,9 @@
       </div>
       <!-- <div class="task-date">24 Feb 12:00</div> -->
     </div>
-    <TaskActions @edit="isEdit = true" v-show="!isEdit" />
+    <TaskActions @edit="isEdit = true" v-show="!isEdit" 
+    @remove="removeTask"
+    />
   </li>
 </template>
 
@@ -38,7 +41,7 @@ import TaskActions from "./TaskActions.vue";
 const props = defineProps({
   task: Object,
 });
-const emit = defineEmits(["updated"]);
+const emit = defineEmits(["updated", "completed", "removed"]);
 const isEdit = ref(false);
 const editingTask = ref(props.task.name);
 const completedClass = computed(() =>
@@ -61,4 +64,19 @@ const undo = () => {
   isEdit.value = false;
   editingTask.value = props.task.name;
 };
+
+const markTaskAsCompleted = (event) => {
+  const updatedTask = { ...props.task, is_completed: !props.task.is_completed };
+  emit("completed", updatedTask);
+};
+const removeTask = () => {
+  if (confirm("Are you sure?")) {
+    
+    emit('removed', props.task)
+  }
+};
 </script>
+
+
+  
+
