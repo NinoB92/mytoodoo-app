@@ -27,7 +27,6 @@
             :tasks="completedTasks"
             :show="completedTasksIsVisible && showCompletedTasks"
           />
-          />
         </div>
       </div>
     </div>
